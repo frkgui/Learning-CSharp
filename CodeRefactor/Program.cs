@@ -7,7 +7,7 @@ Console.Write($"Type the numbers of rooms [{hotelName}] have: ");
 int hotelNumberOfRooms = int.Parse(Console.ReadLine());
 int idGuest = 0;
 
-
+// Initializing every important var.
 Room[] allRooms = new Room[hotelNumberOfRooms];
 for (int i = 0; i < hotelNumberOfRooms; i++){
     allRooms[i] = new Room();
@@ -16,19 +16,19 @@ for (int i = 0; i < hotelNumberOfRooms; i++){
 List<Room> availableRooms = new List<Room>(allRooms);
 List<Guest> guestList = new List<Guest>();
 
-int userChoice = 1;
+int userChoice = 0;
 int menuUserChoice = 0; // var that will be used inside the options menu. 
 
 // Application Start...
-
-Console.Write("\nInitialing...\n");
-System.Threading.Thread.Sleep(500);
-Console.Clear();
+Console.Write("\nInitialing...");
+System.Threading.Thread.Sleep(450);
 
 
-while (userChoice != 0)
+// An especif option will start based on user choice.
+do
 {
-    Console.WriteLine("Options: \n");
+    Console.Clear();
+    Console.WriteLine($"{hotelName}: \n");
 
     Console.WriteLine("(1) - Guests");
     Console.WriteLine("(2) - Rooms");
@@ -38,39 +38,65 @@ while (userChoice != 0)
     Console.Write("\nType your option: ");
     userChoice = int.Parse(Console.ReadLine());
 
-    
 
-    switch (userChoice) {
+    // Options > Guest.
+    switch (userChoice)
+    {
 
         case 1:
 
+            do{ 
             Console.Clear();
 
-            Console.WriteLine("Options > Guests: \n");
+            Console.WriteLine($"{hotelName} > Guests: \n");
 
             Console.WriteLine("(1) - Add new Guest");
             Console.WriteLine("(2) - Show all Guests");
             Console.WriteLine("(3) - Delete guest");
+            Console.WriteLine("(0) - Back");
 
             Console.Write("\nWhat do you want to do?: ");
             menuUserChoice = int.Parse(Console.ReadLine());
 
-            switch (menuUserChoice) 
-            {  
-                case 1:
+            
+            switch (menuUserChoice)
+            {
+                    case 0:break;
 
+                    // Adding a new guest to the system;
+                    case 1:
 
-                    break;
-                case 2:
+                        Guest newGuest = new Guest();
 
-                    break;
+                        Console.Write("\nGuest Name: ");
+                        newGuest.GuestName = Console.ReadLine();
+                        Console.Write("Guest CPF: ");
+                        newGuest.GuestCPF = Console.ReadLine();
+                        Console.Write("Guest Phone: ");
+                        newGuest.GuestPhone = Console.ReadLine();
+
+                        guestList.Add(newGuest);
+                        Console.WriteLine($"\n{newGuest.GuestName} was created!");
+                        System.Threading.Thread.Sleep(850);
+
+                        break;
+
+                    case 2:
+                        foreach (Guest guest in guestList)
+                        {
+                            Console.WriteLine($"Nome: {guest.GuestName}, CPF: {guest.GuestCPF}, Telefone: {guest.GuestPhone}");
+                        }
+                        break;
+               
             }
 
+            }while (menuUserChoice != 0) ;
+
             break;
-    
-    
+
+
     }
 
 
 
-}
+}while (userChoice != 0);

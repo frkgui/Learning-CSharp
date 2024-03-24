@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-    public class Room
+    internal class Room
     {
         // código da classe aqui
     }
