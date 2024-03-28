@@ -1,6 +1,8 @@
 ﻿
 // Application inital Config Information
 
+using System.Runtime.CompilerServices;
+
 Console.Write("Type the hotel name: ");
 string hotelName = Console.ReadLine();
 Console.Write($"Type the numbers of rooms [{hotelName}] have: ");
@@ -27,8 +29,9 @@ System.Threading.Thread.Sleep(450);
 // An especif option will start based on user choice.
 do
 {
+    // Main Menu
     Console.Clear();
-    Console.WriteLine($"{hotelName}: \n");
+    Console.WriteLine($"{hotelName} System: \n");
 
     Console.WriteLine("(1) - Guests");
     Console.WriteLine("(2) - Rooms");
@@ -39,13 +42,14 @@ do
     userChoice = int.Parse(Console.ReadLine());
 
 
-    // Options > Guest.
+    
     switch (userChoice)
     {
 
-        case 1:
+        case 1: // Guest Menu
 
-            do{ 
+            do
+            { 
                 Console.Clear();
 
                 Console.WriteLine($"{hotelName} > Guests: \n");
@@ -58,9 +62,9 @@ do
                 menuUserChoice = int.Parse(Console.ReadLine());
                 Console.WriteLine();
 
-
+                    
                     switch (menuUserChoice)
-                {
+                    {
                         case 0:break;
 
                         // Adding a new guest to the system;
@@ -68,7 +72,7 @@ do
 
                             Guest newGuest = new Guest();   
 
-                            Console.Write("\nGuest Name: ");
+                            Console.Write("Guest Name: ");
                             newGuest.GuestName = Console.ReadLine();
                             Console.Write("Guest CPF: ");
                             newGuest.GuestCPF = Console.ReadLine();
@@ -122,12 +126,126 @@ do
                         }
                         break;
                
-                }
+                    }
 
             }while (menuUserChoice != 0) ;
 
             break;
 
+        case 2: // Room Menu
+            do {   
+                Console.Clear();
+
+                Console.WriteLine($"{hotelName} > Rooms: \n");
+
+                Console.WriteLine("(1) - Check all rooms status");
+                Console.WriteLine("(2) - Show all avaliable rooms");
+                Console.WriteLine("(0) - Back");
+                Console.Write("\nWhat do you want to do?: ");
+                menuUserChoice = int.Parse(Console.ReadLine());
+                Console.WriteLine();
+
+                switch (menuUserChoice)
+                {
+                    case 0:break;
+                    case 1:
+                        foreach (Room room in allRooms)
+                        {
+                            Console.WriteLine($"Room number: {room.IdRoom}, Status: {room.stringIsBooked()}");
+                        }
+                    
+                        Console.WriteLine("\nPress any key to continue...");
+                        Console.ReadKey();
+                        break;
+                    case 2:
+                        foreach (Room room in allRooms)
+                        {
+                            if (room.IsBooked == false) { Console.WriteLine($"Room number: {room.IdRoom}, Status: {room.stringIsBooked()}"); }
+                        }
+                        Console.WriteLine("\nPress any key to continue...");
+                        Console.ReadKey();
+
+                        break;
+
+                }
+            } while (menuUserChoice != 0);
+
+            break;
+
+        case 3: // Book Menu
+            do
+            {
+                Console.Clear();
+
+                Console.WriteLine($"{hotelName} > Book: \n");
+
+                Console.WriteLine("(1) - Book a room");
+                Console.WriteLine("(2) - Checkout a room");
+                Console.WriteLine("(0) - Back");
+                Console.Write("\nWhat do you want to do?: ");
+                menuUserChoice = int.Parse(Console.ReadLine());
+                Console.WriteLine();
+
+                switch (menuUserChoice)
+                {
+                    case 0: break;
+                    case 1:
+                        Console.Write("Type the room number: ");
+                        int bookRoomId = int.Parse(Console.ReadLine());
+                        Console.Write("\nType the id of the guest that will book the room: ");
+                        int bookRoomGuest = int.Parse(Console.ReadLine());
+
+                        foreach(Room room in availableRooms)
+                        {
+                            if(room.IdRoom == bookRoomId)
+                            {
+                                room.bookRoom(bookRoomGuest);
+                                Console.WriteLine($"\nRoom number {bookRoomId} was booked sucessfully!");
+                            }
+                        }
+                        Console.WriteLine("\nPress any key to continue...");
+                        Console.ReadKey();
+                        break;
+
+                    case 2:
+
+                        Console.Write("Type the room number: ");
+                        int bookRoomIdCheckout = int.Parse(Console.ReadLine());
+                        Console.Write("Confirm checkout (Y) = Yes, (N) No: ");
+                        String confirmCheckout = Console.ReadLine();
+
+                        if(confirmCheckout.Equals("Yes") ||
+                           confirmCheckout.Equals("yes"))
+                        {
+                            foreach (Room room in availableRooms)
+                            {
+                                if (room.IdRoom == bookRoomIdCheckout)
+                                {
+                                    room.checkoutRoom();
+                                    Console.WriteLine($"\nCheckout completed!");
+                                }
+                            }
+                            Console.WriteLine("\nPress any key to continue...");
+                            Console.ReadKey();
+                            break;
+
+                        }
+
+
+
+
+                        break;
+
+                }
+
+
+
+
+
+            } while (menuUserChoice != 0);
+
+
+         break;
 
     }
 

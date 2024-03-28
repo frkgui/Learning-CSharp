@@ -16,6 +16,8 @@ internal class Guest
     public Guest()
     {
         idGuest = ++lastId;
+        guestName = string.Empty; // Inicializa guestName como uma string vazia
+
     }
 
     public int IdGuest
